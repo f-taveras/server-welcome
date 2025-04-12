@@ -1,9 +1,25 @@
 import React from 'react';
+import  {getNAPOD, NasaApodResponse} from './APIs/NAPOD'
+import { useEffect, useState } from 'react';
 import { User, Server, Cpu, MemoryStick as Memory, Network } from 'lucide-react';
 
 function App() {
+
+  const [napod, setNapod] = useState<NasaApodResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    getNAPOD()
+      .then((setNapod)) 
+      .catch(err => setError(err.message));
+   }, []);
+
+   if (error) return <span>Error: {error}</span>;
+    if (!napod) return <span>Loading...</span>;
+
+
   return (
-    <div className="min-h-screen bg-black bg-[url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564')] bg-cover bg-center bg-fixed">
+    <div id="media" className="min-h-screen bg-[url(${data.url})] bg-cover bg-center bg-fixed">
       {/* Overlay for better text readability */}
       <div className="min-h-screen bg-black/50 backdrop-blur-sm">
         {/* Server Info Box */}
@@ -15,6 +31,7 @@ function App() {
               className="w-16 h-16 rounded-full object-cover border-2 border-purple-500"
             />
             <div>
+              
               <h2 className="text-xl font-bold text-white">Mt. Toro</h2>
               <p className="text-purple-300 text-sm">Server Master</p>
             </div>
@@ -52,7 +69,7 @@ function App() {
           <h1 className="text-6xl font-bold text-white mb-6 text-center">
             Welcome to
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-              The Milky Way
+              MilkyWay
             </span>
           </h1>
 
@@ -60,14 +77,21 @@ function App() {
             Embark on a cosmic journey through our digital galaxy. If you are here, you already know the reason why, so please proseed . If you have the time, please check my portfolio and my GitHub repository. I am always looking for new opportunities and challenges in the tech world.
           </p>
 
-          <div className="mt-8">
+          <div className="mt-8 space-x-4">
             <a href="http://prtflio.info">
-            <button className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full 
+              <button className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full 
               transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 
               focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black">
-              Portfolio
-            </button>
-                </a>
+                Portfolio
+              </button>
+            </a>
+            <a href="http://blogs.milkyway.fit">
+              <button className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full 
+              transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 
+              focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black">
+                Blogs | comming soon...
+              </button>
+            </a>
           </div>
         </div>
       </div>
