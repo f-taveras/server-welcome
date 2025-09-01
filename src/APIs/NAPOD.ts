@@ -7,14 +7,14 @@ export interface NasaApodResponse {
     date: string;
     resource: string;
     copyright: string;
+    hdurl: string;
 }
 
 const apiKey = import.meta.env.VITE_NASA_API_KEY;
-// const apiKey = 'DEMO_KEY'; // VERY limited usage
-const apiURL = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
+const apiURL = import.meta.env.VITE_NASA_API_URL;
 
 export const getNAPOD = async (): Promise<NasaApodResponse> => {
-    const response = await fetch(apiURL);
+    const response = await fetch(`${apiURL}?api_key=${apiKey}`);
     if (!response.ok) {
         throw new Error('Failed to fetch NASA APOD');
     }
