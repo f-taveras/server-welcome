@@ -1,7 +1,7 @@
-import React from 'react';
 import { getNAPOD, NasaApodResponse } from './APIs/NAPOD'
 import { useEffect, useState } from 'react';
-import { User, Server, Cpu, MemoryStick as Memory, Network } from 'lucide-react';
+import { APODCard } from './components/APODCard';
+import { NavigationDropdown } from './components/projects_dropdown';
 
 function App() {
 
@@ -19,61 +19,51 @@ function App() {
 
 
   return (
-    <div id="media" className='min-h-screen bg-cover bg-center bg-fixed'
-      style={{ backgroundImage: `url(${napod.url})` }}>
-      {/* Overlay for better text readability */}
-      <div className="min-h-screen bg-black/50 backdrop-blur-sm">
-        {/* Server Info Box */}
-        <div className="absolute bottom-4 left-4 bg-slate-900/90 p-6 rounded-lg shadow-xl border border-purple-500/30 backdrop-blur-md w-2/3">
-          <div className="flex items-center gap-4 mb-4">
-            <img
-              src="https://images.unsplash.com/photo-1614732414444-096e5f1122d5"
-              alt="Profile"
-              className="w-16 h-16 rounded-full object-cover border-2 border-purple-500"
 
-            />
-            <div>
+    <div
+      id="media"
+      className="min-h-screen bg-cover bg-center bg-fixed flex flex-col"
+      style={{ backgroundImage: `url(${napod.hdurl})` }}
+    >
+      {/* Overlay */}
+        <NavigationDropdown className="absolute top-6 left-6 z-50" />
+      <div className="min-h-screen  relative flex flex-col items-center justify-center p-6 gap-8">
 
-              <h2 className="text-xl font-bold text-white">{napod.title}</h2>
-              <p className="text-purple-300 text-sm">{napod.date} {napod.copyright}</p>
-            </div>
-          </div>
 
-          <p className="text-gray-300 mb-4">{napod.explanation}</p>
-        </div>
+
 
         {/* Welcome Message */}
-        <div className="flex flex-col items-center justify-center min-h-screen px-4">
-          <h1 className="text-6xl font-bold text-white mb-6 text-center">
+        <div className="flex flex-col items-center justify-center text-center max-w-3xl gap-4">
+          <h1 className="text-6xl font-bold text-white">
             Welcome to
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
               MilkyWay
             </span>
           </h1>
+          
 
-          <p className="text-xl text-gray-300 max-w-2xl text-center leading-relaxed">
-            Embark on a cosmic journey through our digital galaxy. If you are here, you already know the reason why, so please proseed . If you have the time, please check my portfolio and my GitHub repository. Otherwise, Just enjoy the NASA Astronomical Picture of the day.
-          </p>
-
-          <div className="mt-8 space-x-4">
+          <div className="mt-4 flex flex-col sm:flex-row gap-4">
             <a href="http://prtflio.info">
-              <button className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full 
-              transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 
-              focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black">
+              <button className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black">
                 Portfolio
               </button>
             </a>
             <a href="http://blogs.milkyway.fit">
-              <button className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full 
-              transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 
-              focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black">
-                Blogs | comming soon...
+              <button className="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-full transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black">
+                Blogs | Coming soon...
               </button>
             </a>
+            {/* APOD Info */}
+
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 lg:left-6 lg:transform-none lg:translate-x-0">
+              <APODCard napod={napod} />
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+
   );
 }
 
